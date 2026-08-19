@@ -1,0 +1,27 @@
+/* Native selects use the selected option as intrinsic width on some browsers.
+   Keep that width from changing the four-column grid after a choice is made. */
+.slot-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+}
+
+.slot-card,
+.slot-card label {
+  min-width: 0;
+}
+
+.slot-card select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 42px;
+}
+
+@media (max-width: 850px) {
+  .slot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 410px) {
+  .slot-grid { grid-template-columns: minmax(0, 1fr); }
+}
