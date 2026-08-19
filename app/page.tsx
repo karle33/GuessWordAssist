@@ -15,6 +15,7 @@ export default function Home() {
   const [slots, setSlots] = useState<Slot[]>(emptySlots);
   const [round, setRound] = useState(0);
   const [ready, setReady] = useState(false);
+  const [openPicker, setOpenPicker] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -72,12 +73,17 @@ export default function Home() {
       <div className="section-heading"><div><span className="step">02</span><h2>四字候选</h2></div><p>选中即固定；“待定”表示继续保留全部可用候选</p></div>
       <div className="slot-grid">{slots.map((slot, index) => <article className="slot-card" key={index}>
         <div className="slot-title"><span>第</span><b>{["一", "二", "三", "四"][index]}</b><span>字</span></div>
-        {groups.map((group) => { const current = slot[group.kind]; const list = options[group.kind]; const fixedButExcluded = current && !list.includes(current); return <label key={group.kind}>
-          <span>{group.label}<small>{current ? "已固定" : `${list.length} 个候选`}</small></span>
-          <select value={current} onChange={(e) => fixValue(index, group.kind, e.target.value)} className={current ? "fixed" : ""}>
-            <option value="">待定（{list.length}）</option>{fixedButExcluded && <option value={current}>{current}（已全局排除）</option>}{list.map((value) => <option value={value} key={value}>{value}</option>)}
-          </select>
-        </label>; })}
+        {groups.map((group) => { const current = slot[group.kind]; const list = options[group.kind]; const pickerId = `${index}-${group.kind}`; const isOpen = openPicker === pickerId; const fixedButExcluded = current && !list.includes(current); return <div className="field" key={group.kind}>
+          <div className="field-label"><span>{group.label}</span><small>{current ? "已固定" : `${list.length} 个候选`}</small></div>
+          <button type="button" className={`picker-trigger ${current ? "fixed" : ""} ${fixedButExcluded ? "warning" : ""}`} onClick={() => setOpenPicker(isOpen ? null : pickerId)} aria-expanded={isOpen} aria-haspopup="listbox">
+            <span>{current || `待定（${list.length}）`}</span><i aria-hidden="true" />
+          </button>
+          {isOpen && <div className="picker-menu" role="listbox" aria-label={`${["第一", "第二", "第三", "第四"][index]}字${group.label}`}>
+            <button type="button" className={!current ? "selected" : ""} onClick={() => { fixValue(index, group.kind, ""); setOpenPicker(null); }}>待定（{list.length}）</button>
+            {fixedButExcluded && <button type="button" className="selected warning" onClick={() => setOpenPicker(null)}>{current}（已全局排除）</button>}
+            {list.map((value) => <button type="button" role="option" aria-selected={current === value} className={current === value ? "selected" : ""} onClick={() => { fixValue(index, group.kind, value); setOpenPicker(null); }} key={value}>{value}</button>)}
+          </div>}
+        </div>; })}
         <div className="syllable" aria-label="当前音节">{slot.initials || "·"}<span>{slot.finals || "·"}</span><sup>{slot.tones || "·"}</sup></div>
       </article>)}</div>
     </section>

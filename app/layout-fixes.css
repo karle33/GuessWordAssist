@@ -1,27 +1,113 @@
-/* Native selects use the selected option as intrinsic width on some browsers.
-   Keep that width from changing the four-column grid after a choice is made. */
 .slot-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
 }
 
 .slot-card,
-.slot-card label {
+.field {
   min-width: 0;
 }
 
-.slot-card select {
-  display: block;
+.field {
+  position: relative;
+  margin-top: 13px;
+}
+
+.field-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.field-label small {
+  color: #8a928e;
+  font-weight: 400;
+}
+
+.picker-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   width: 100%;
   min-width: 0;
-  max-width: 100%;
   height: 42px;
+  padding: 0 12px;
+  overflow: hidden;
+  border: 1px solid #d7d8d3;
+  border-radius: 8px;
+  background: #fafaf7;
+  color: #5f6964;
+  text-align: left;
 }
+
+.picker-trigger span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-trigger i {
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.picker-trigger.fixed {
+  border-color: #9db7a5;
+  background: #eef5ef;
+  color: #184f3b;
+  font-weight: 800;
+}
+
+.picker-trigger.warning { color: #a94a3b; }
+
+.picker-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  max-height: 210px;
+  overflow-y: auto;
+  padding: 5px;
+  border: 1px solid #cfd6d1;
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 12px 30px #173c2c24;
+}
+
+.picker-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #34413c;
+  text-align: left;
+}
+
+.picker-menu button:hover,
+.picker-menu button.selected {
+  background: #e7f0e9;
+  color: #184f3b;
+  font-weight: 700;
+}
+
+.picker-menu button.warning { color: #a94a3b; }
 
 @media (max-width: 850px) {
   .slot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 410px) {
+@media (max-width: 600px) {
   .slot-grid { grid-template-columns: minmax(0, 1fr); }
 }
