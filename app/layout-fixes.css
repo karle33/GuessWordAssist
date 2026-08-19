@@ -8,6 +8,18 @@
   min-width: 0;
 }
 
+.slot-card {
+  overflow: visible;
+}
+
+.slot-card.picker-open {
+  z-index: 10;
+}
+
+.slot-card::before {
+  border-radius: 12px 12px 0 0;
+}
+
 .field {
   position: relative;
   margin-top: 13px;

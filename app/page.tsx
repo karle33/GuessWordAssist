@@ -71,7 +71,7 @@ export default function Home() {
     </section>
     <section className="panel candidate-panel">
       <div className="section-heading"><div><span className="step">02</span><h2>四字候选</h2></div><p>选中即固定；“待定”表示继续保留全部可用候选</p></div>
-      <div className="slot-grid">{slots.map((slot, index) => <article className="slot-card" key={index}>
+      <div className="slot-grid">{slots.map((slot, index) => <article className={`slot-card ${openPicker?.startsWith(`${index}-`) ? "picker-open" : ""}`} key={index}>
         <div className="slot-title"><span>第</span><b>{["一", "二", "三", "四"][index]}</b><span>字</span></div>
         {groups.map((group) => { const current = slot[group.kind]; const list = options[group.kind]; const pickerId = `${index}-${group.kind}`; const isOpen = openPicker === pickerId; const fixedButExcluded = current && !list.includes(current); return <div className="field" key={group.kind}>
           <div className="field-label"><span>{group.label}</span><small>{current ? "已固定" : `${list.length} 个候选`}</small></div>
