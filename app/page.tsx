@@ -75,7 +75,7 @@ export default function Home() {
         <div className="slot-title"><span>第</span><b>{["一", "二", "三", "四"][index]}</b><span>字</span></div>
         {groups.map((group) => { const current = slot[group.kind]; const list = options[group.kind]; const pickerId = `${index}-${group.kind}`; const isOpen = openPicker === pickerId; const fixedButExcluded = current && !list.includes(current); return <div className="field" key={group.kind}>
           <div className="field-label"><span>{group.label}</span><small>{current ? "已固定" : `${list.length} 个候选`}</small></div>
-          <button type="button" className={`picker-trigger ${current ? "fixed" : ""} ${fixedButExcluded ? "warning" : ""}`} onClick={() => setOpenPicker(isOpen ? null : pickerId)} aria-expanded={isOpen} aria-haspopup="listbox">
+          <button type="button" className={`picker-trigger ${current ? "is-confirmed" : ""} ${fixedButExcluded ? "warning" : ""}`} onClick={() => setOpenPicker(isOpen ? null : pickerId)} aria-expanded={isOpen} aria-haspopup="listbox">
             <span>{current || `待定（${list.length}）`}</span><i aria-hidden="true" />
           </button>
           {isOpen && <div className="picker-menu" role="listbox" aria-label={`${["第一", "第二", "第三", "第四"][index]}字${group.label}`}>

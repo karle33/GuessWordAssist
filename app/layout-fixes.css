@@ -60,7 +60,7 @@
   transform: translateY(-2px) rotate(45deg);
 }
 
-.picker-trigger.fixed {
+.picker-trigger.is-confirmed {
   border-color: #9db7a5;
   background: #eef5ef;
   color: #184f3b;
